@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Transaction } from "@/types/types";
-import { ref, computed, Transition, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
 const transactions = ref<(Transaction)[]>([]);
 const balance = ref(0);
 const buy = {
@@ -100,28 +100,24 @@ const balanceStyle = () => {
         <div class="income_number">{{ incomeTotal }}€</div>
       </div>
       <div class="break-line">
-        <img src="../assets/Add Ellipse Icon.svg" alt="add icon" @click="showExpense = !showExpense">
-        <img src="../assets/Add Ellipse Icon.svg" alt="add icon" @click="showIncome = !showIncome">
+        <img src="../assets/Add Ellipse Icon.svg" alt="add icon" @click="showExpense = !showExpense; showIncome = false">
+        <img src="../assets/Add Ellipse Icon.svg" alt="add icon" @click="showIncome = !showIncome; showExpense = false">
       </div>
     </div>
-    <Transition name="fade">
       <form @submit.prevent="submitBuy" v-if="showExpense">
         <label for="amount">Amount :</label>
         <input type="number" v-model="buy.amount.value" id="amount" />
         <label for="description">Description :</label>
         <input type="text" v-model="buy.description.value" id="description" />
-        <button type="submit" class="submit">Submit</button>
+        <button type="submit" class="submit_expense">Submit</button>
       </form>
-    </Transition>
-    <Transition>
       <form @submit.prevent="submitGain" v-if="showIncome">
         <label for="amount">Amount :</label>
         <input type="number" v-model="gain.amount.value" id="amount" />
         <label for="description">Description :</label>
         <input type="text" v-model="gain.description.value" id="description" />
-        <button type="submit" class="submit">Submit</button>
+        <button type="submit" class="submit_income">Submit</button>
       </form>
-    </Transition>
     <div class="history">History :   <img src="../assets/Sort Vertical Icon.svg" alt="sort icon" @click="sortTransactions"></div>
     <ul v-if="transactions.length > 0">
       <li v-for="transaction in transactions" :class="transaction.type">
@@ -137,6 +133,7 @@ const balanceStyle = () => {
 </template>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 img {
   height: 16px;
 }
@@ -170,7 +167,7 @@ main {
 
 .totals_numbers {
   margin-top: -35px;
-  margin-left: 55px;
+  margin-left: 50px;
   display: flex;
 }
 
@@ -191,6 +188,24 @@ form {
   align-items: center;
   flex-direction: column;
   margin-bottom: 20px;
+}
+
+.submit_expense, .submit_income {
+  border: none;
+  border-radius: .25rem;
+  margin-top: .5rem;
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.submit_expense {
+  background-color: #f38181;
+
+}
+
+.submit_income {
+  background-color: #95e1d3;
 }
 
 .history {
@@ -240,16 +255,6 @@ li {
 .right_div {
   display: flex;
   align-items: center;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 
 .expense_filler,

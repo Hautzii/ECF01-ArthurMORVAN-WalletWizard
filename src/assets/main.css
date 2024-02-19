@@ -2,6 +2,7 @@ body {
     background-color: #1e1e1e;
     color: black;
     font-family: 'Poppins', sans-serif;
+    font-weight: 500;
     display: flex;
     justify-content: center;
     align-items: center;
