@@ -1,0 +1,11 @@
+body {
+    background-color: #1e1e1e;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100dvh;
+    overflow: hidden;
+}
